@@ -68,7 +68,27 @@ function h(p,input) begin
 end
 
 function h(⟨p,q,r,s⟩,input) begin
-	return λ
+	if p='0' and q='0' and r='0' and s='0' and input!='&' then return λ
+	elseif p!='0' and q='0' and r='0' and s='0' and input!='&' then return λ
+	elseif p!='0' and q!='0' and r='0' and s='0' and input!='&' then return ""+input+q+p
+	elseif p!='0' and q!='0' and r!='0' and s='0' and input='&' then return '&'
+	elseif p!='0' and q!='0' and r!='0' and s='&' then 
+		if input='&' then return λ
+		elseif input=p then return λ
+		else return λ
+		end
+	elseif p!='0' and q!='0' and r!='0' and s='1' then
+		if input='&' then return λ
+		elseif input=q then return λ
+		else return λ
+		end
+	elseif p!='0' and q!='0' and r!='0' and s='2' then
+		if input='&' then return λ
+		elseif input=r then return '*'
+		else return ""+input+q+p
+		end
+	else return λ
+	end
 end
 
 function g(s) begin
@@ -76,11 +96,11 @@ function g(s) begin
 end
 
 function createDecoder():ITransducer begin
-	Q:= ({'0','a','b','c'}×{'0','a','b','c'})×({'0','a','b','c'}×{'0','a','b','c'})
+	Q:= ({'0','a','b','c'}×{'0','a','b','c'}×{'0','a','b','c'}×{'0','1','2','&'}) ∪ {'e'}
 	Σ:= ('a'‥'c') ∪ {'&'}
 	Σ´:= Σ ∪ {'*'}
-	q₀:= ⟨⟨'0','0','0'⟩,⟨'0','0','0'⟩⟩
-	F:= {⟨⟨d,d,d⟩,⟨d,d,d⟩⟩ | d in ('a'‥'c')}
+	q₀:= ⟨'0','0','0','0'⟩
+	F:= {⟨d,e,f,'0'⟩ | d in ('a'‥'c'), e in ('a'‥'c'), f in ('a'‥'c')}
 	return GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ1,g,h1)
 end
 
@@ -90,17 +110,4 @@ end
 
 function h1(p,q) begin 
 
-end
-
- function shiftSymbol(symbol, shift) begin
-	var  r : Character
-  	if symbol in ('a'‥'z') then
-	r:= 'a' + (symbol -'a'+ shift)% 26
-	elseif symbol in ('A'‥'Z') then
-	r:= 'A' + (symbol -'A'+ shift)% 26
-	elseif  symbol in ('0'‥'9') then
-	r:= '0' + (symbol -'0'+ shift)% 10
-	else r:= r
-	end		
-	return r
 end
