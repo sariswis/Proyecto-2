@@ -15,54 +15,32 @@
 //   ρi =  shift( σi, d) if  (i%d) = 1
 //   ρi =   σi  otherwise
 
-
-
 using gold.**
-  
-         
   
 var A
 var B
 
 procedure main(args:String[]) begin
 	var sc:java.util.Scanner(System.$in)
-    
-    A = ('a'‥'z')
-    B = ('0'‥'9')
+	A = ('a'‥'z')
+	B = ('0'‥'9')
 	coder:=createCoder()
    	deCoder:=createDecoder()
-    
-    //GAutomataFrame.show(coder)
-   //GAutomataFrame.show(deCoder)
-   
-  	
-	
-Utilities.testCodeDecode(coder,deCoder)
-		
+   	GAutomataFrame.show(coder)
+	//GAutomataFrame.show(deCoder)
+	Utilities.testCodeDecode(coder,deCoder)
 end
-
-
-
-
 
 function createCoder():ITransducer begin
-	
-	
 	Q:= {⟨d,s,pos⟩ | d in {3,2,5}, s in ('a'‥'z'),0 <= pos < 5  }  ∪ {3,2,5,"I","E"} ∪ {3,2,5}× ('a'‥'z')
-	
-	Σ :=('a'‥'z')∪{ ':', '2', '3', '5'}
-	Σ´:=Σ∪{ '#'}
+	Σ:= ('a'‥'z')∪{ ':', '2', '3', '5'}
+	Σ´:= Σ∪{ '#'}
 	q₀:= "I"
-	F:=	 {⟨d,s,pos⟩ | d in {3,2,5}, s in ('a'‥'z'),0 <= pos < 5  }
-
-	return 	GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ,g,h)
+	F:= {⟨d,s,pos⟩ | d in {3,2,5}, s in ('a'‥'z'),0 <= pos < 5  }
+	return GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ,g,h)
 end
-
-	
-	
 	
 function δ(state,input) begin
-   
    	if state="I" and input in { '2', '3', '5'}  then return input - '0'
  	elseif state in {2,3,5} and input in ('a'‥'z') then return ⟨state, input⟩
   	elseif state in {2,3,5,"I","E"} then return "E"
@@ -72,15 +50,9 @@ function δ(state,input) begin
   		return ⟨d,s,(pos+1)%d⟩
   	else return "E"
    	end
-
 end
 
-
-
-	
 function h(state,input) begin
-   
- 
    	if state="I" and input in { '2', '3', '5'}  then return input
  	elseif state in {2,3,5} and input in ('a'‥'z') then return input
   	elseif state in {2,3,5,"I","E"} then return λ
@@ -93,12 +65,7 @@ function h(state,input) begin
    	end
    else return λ
 end
-
 end
-
-
-
-
 
 function g(s) begin
 	return λ
@@ -106,24 +73,20 @@ end
 
 function createDecoder():ITransducer begin
 	Q:= {⟨d,s,pos⟩ | d in {3,2,5}, s in ('a'‥'z'),pos in (0‥4)∪{"_"}  }  ∪ {3,2,5,"I","E"} 
-	Σ´ :=('a'‥'z')∪{ ':', '2', '3', '5'}
-	Σ:=Σ´∪{ '#'}
+	Σ´:= ('a'‥'z')∪{ ':', '2', '3', '5'}
+	Σ:= Σ´∪{ '#'}
 	q₀:= "I"
-	F:=	 {⟨d,s,pos⟩ | d in {3,2,5}, s in ('a'‥'z'),0 <= pos < 5  }
-
-	return 	GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ1,g,h1)
+	F:= {⟨d,s,pos⟩ | d in {3,2,5}, s in ('a'‥'z'),0 <= pos < 5  }
+	return GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ1,g,h1)
 end
 
-	
-	
-	
 function δ1(state,input) begin
   if state="I" and input in { '2', '3', '5'}  then return input - '0'
   elseif state in {2,3,5} and input in ('a'‥'z') then return ⟨state, input,"_"⟩
   else return "E"
   end
 end
-// ------
+
 function δ1(⟨d,s,pos⟩,input) begin
   if pos="_" and input = ':' then return ⟨d,s,1⟩
   elseif pos="_"  then return "E"
@@ -134,9 +97,6 @@ function δ1(⟨d,s,pos⟩,input) begin
   end
 end
 
-
-
-	
 function h1(state,input) begin 
   if state="I" and input in { '2', '3', '5'}  then return input-'0' 
   elseif state in {2,3,5} and input in ('a'‥'z') then return input
@@ -146,21 +106,15 @@ end
 
 function h1(⟨d,s,pos⟩,input) begin
  	if pos="_" and input = ':' then return input
-    elseif input = '#' and pos=0 then return s
+	elseif input = '#' and pos=0 then return s
  	elseif input in ('a'‥'z') and pos=1 then return shiftSymbol(input,-d)
  	elseif input in ('a'‥'z')  then return input
    	else return λ
   	end
 end
 
-
-
-
-
-
  function shiftSymbol(symbol, shift) begin
 	var  r : Character
-   
   	if symbol in ('a'‥'z') then
 	r:= 'a' + (symbol -'a'+ shift)% 26
 	elseif symbol in ('A'‥'Z') then
@@ -171,5 +125,3 @@ end
 	end		
 	return r
 end
-
-

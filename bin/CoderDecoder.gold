@@ -1,0 +1,106 @@
+// -----------------------
+// Silvia Takahashi
+// UNIVERSIDAD DE LOS ANDES
+// Codes and decodes
+// Reads a string  of the form dσ:ω
+// where   d in {2,3,5}
+//  σ  in {a,‥,z}
+//  ω in {a,‥z}*
+//   outputs dσ:ω' where  ω' is constructed as follows.  If σ appears in positions p such that p%d = 0 then it is replaced by #
+//   Symbols that appear in positions such that p%d =1 are replaced by the symbol shifted  d  positions
+//      for instance if the symbol is a and d  is 2 then the answer would be c.
+//  ω=σ1‥.σn
+// ω' =ρ1‥ρn
+//   ρi = # if   σi =s and  (i%d) = 0
+//   ρi =  shift( σi, d) if  (i%d) = 1
+//   ρi =   σi  otherwise
+
+using gold.**
+
+procedure main(args:String[]) begin
+	var sc:java.util.Scanner(System.$in)
+	coder:=createCoder()
+   	//deCoder:=createDecoder()
+   	GAutomataFrame.show(coder)
+	//GAutomataFrame.show(deCoder)
+	//Utilities.testCodeDecode(coder,deCoder)
+end
+
+function createCoder():ITransducer begin
+	Q:= ({'0','a','b','c'}×{'0','a','b','c'}×{'0','a','b','c'}×{'0','1','2','&'}) ∪ {'e'}
+	Σ:= ('a'‥'c') ∪ {'&'}
+	Σ´:= Σ ∪ {'*'}
+	q₀:= ⟨'0','0','0','0'⟩
+	F:= {⟨d,e,f,'0'⟩ | d in ('a'‥'c'), e in ('a'‥'c'), f in ('a'‥'c')}
+	return GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ,g,h)
+end
+
+function δ(p,input) begin
+	return 'e'
+end
+
+function δ(⟨p,q,r,s⟩,input) begin
+	if p='0' and q='0' and r='0' and s='0' and input!='&' then return ⟨input,q,r,s⟩
+	elseif p!='0' and q='0' and r='0' and s='0' and input!='&' then return ⟨p,input,r,s⟩
+	elseif p!='0' and q!='0' and r='0' and s='0' and input!='&' then return ⟨p,q,input,s⟩
+	elseif p!='0' and q!='0' and r!='0' and s='0' and input='&' then return ⟨p,q,r,input⟩
+	elseif p!='0' and q!='0' and r!='0' and s='&' then 
+		if input='&' then return 'e'
+		elseif input=p then return ⟨p,q,r,'1'⟩
+		else return ⟨input,'0','0','0'⟩
+		end
+	elseif p!='0' and q!='0' and r!='0' and s='1' then
+		if input='&' then return 'e'
+		elseif input=q then return ⟨p,q,r,'2'⟩
+		else return ⟨p,input,'0','0'⟩
+		end
+	elseif p!='0' and q!='0' and r!='0' and s='2' then
+		if input='&' then return 'e'
+		elseif input=r then return ⟨p,q,r,'0'⟩
+		else return ⟨p,q,input,'0'⟩
+		end
+	else return 'e'
+	end
+end
+
+function h(p,input) begin
+	return λ
+end
+
+function h(⟨p,q,r,s⟩,input) begin
+	return λ
+end
+
+function g(s) begin
+	return λ
+end
+
+function createDecoder():ITransducer begin
+	Q:= ({'0','a','b','c'}×{'0','a','b','c'})×({'0','a','b','c'}×{'0','a','b','c'})
+	Σ:= ('a'‥'c') ∪ {'&'}
+	Σ´:= Σ ∪ {'*'}
+	q₀:= ⟨⟨'0','0','0'⟩,⟨'0','0','0'⟩⟩
+	F:= {⟨⟨d,d,d⟩,⟨d,d,d⟩⟩ | d in ('a'‥'c')}
+	return GDeterministicTransducer(Q,Σ,Σ´,q₀,F,δ1,g,h1)
+end
+
+function δ1(p,q) begin
+
+end
+
+function h1(p,q) begin 
+
+end
+
+ function shiftSymbol(symbol, shift) begin
+	var  r : Character
+  	if symbol in ('a'‥'z') then
+	r:= 'a' + (symbol -'a'+ shift)% 26
+	elseif symbol in ('A'‥'Z') then
+	r:= 'A' + (symbol -'A'+ shift)% 26
+	elseif  symbol in ('0'‥'9') then
+	r:= '0' + (symbol -'0'+ shift)% 10
+	else r:= r
+	end		
+	return r
+end
