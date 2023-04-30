@@ -58,8 +58,12 @@ public final class CoderDecoder {
       sc=$invokeConstructor(java.util.Scanner.class,new Object[]{$invokeField(System.class,"in",true,null)});
       $line=22;
       Object coder=$fix(CoderDecoder.createCoder());
-      $line=24;
-      GAutomataFrame.show($cast(gold.structures.automaton.IAutomaton.class,coder));
+      $line=23;
+      Object deCoder=$fix(CoderDecoder.createDecoder());
+      $line=25;
+      GAutomataFrame.show($cast(gold.structures.automaton.IAutomaton.class,deCoder));
+      $line=26;
+      Utilities.testCodeDecode($cast(gold.structures.automaton.ITransducer.class,coder),$cast(gold.structures.automaton.ITransducer.class,deCoder));
     }
     catch (Throwable $throwable) {
       $rethrow($throwable,CoderDecoder.class,"main",$line);
@@ -398,9 +402,9 @@ public final class CoderDecoder {
       $line=99;
       Object Q=$fix($opUnionY($opCartsY(new Object[]{GCollections.asSet('0','a','b','c'),GCollections.asSet('0','a','b','c'),GCollections.asSet('0','a','b','c'),GCollections.asSet('0','1','2','&')}),GCollections.asSet('e')));
       $line=100;
-      Object \u03A3=$fix($opUnionY($opIntvlY('a','c'),GCollections.asSet('&')));
+      Object \u03A3=$fix($opUnionY($opIntvlY('a','c'),GCollections.asSet('&','*')));
       $line=101;
-      Object \u03A3_=$fix($opUnionY(\u03A3,GCollections.asSet('*')));
+      Object \u03A3_=$fix($opUnionY($opIntvlY('a','c'),GCollections.asSet('&')));
       $line=102;
       Object q_0=$fix(GCollections.asList('0','0','0','0'));
       $line=103;
@@ -424,24 +428,278 @@ public final class CoderDecoder {
     }
     return $cast(ITransducer.class,$result);
   }
-  public static Object \u03B41(Object p, Object q) {
+  public static Object \u03B41(Object p, Object input) {
     int $line=0;
     Object $result=null;
     $try:try {
+      $line=108;
+      $result='e';
+      if (true) break $try;
       $line=109;
-      $rethrow(new RuntimeException("The function \"\u03B41(p:Object,q:Object)\" did not return a value."));
+      $rethrow(new RuntimeException("The function \"\u03B41(p:Object,input:Object)\" did not return a value."));
     }
     catch (Throwable $throwable) {
       $rethrow($throwable,CoderDecoder.class,"\u03B41",$line);
     }
     return $result;
   }
-  public static Object h1(Object p, Object q) {
+  public static Object \u03B41(java.lang.Iterable $v9, Object input) {
     int $line=0;
     Object $result=null;
     $try:try {
-      $line=113;
-      $rethrow(new RuntimeException("The function \"h1(p:Object,q:Object)\" did not return a value."));
+      java.util.Iterator $v10=GCollections.unmodifiableCollection($v9).iterator();
+      Object p=$v10.next();
+      Object q=$v10.next();
+      Object r=$v10.next();
+      Object s=$v10.next();
+      $line=112;
+      if (((((($opEqualY(p,'0')&&$opEqualY(q,'0'))&&$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&!$opEqualY(input,'*'))&&!$opEqualY(input,'&'))) {
+        $line=112;
+        $result=GCollections.asList(input,q,r,s);
+        if (true) break $try;
+      }
+      else {
+        $line=113;
+        if ((((((!$opEqualY(p,'0')&&$opEqualY(q,'0'))&&$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&!$opEqualY(input,'*'))&&!$opEqualY(input,'&'))) {
+          $line=113;
+          $result=GCollections.asList(p,input,r,s);
+          if (true) break $try;
+        }
+        else {
+          $line=114;
+          if ((((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&!$opEqualY(input,'*'))&&!$opEqualY(input,'&'))) {
+            $line=114;
+            $result=GCollections.asList(p,q,input,s);
+            if (true) break $try;
+          }
+          else {
+            $line=115;
+            if (((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&$opEqualY(input,'&'))) {
+              $line=115;
+              $result=GCollections.asList(p,q,r,input);
+              if (true) break $try;
+            }
+            else {
+              $line=116;
+              if ((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'&'))) {
+                $line=117;
+                if ($opEqualY(input,'&')) {
+                  $line=117;
+                  $result='e';
+                  if (true) break $try;
+                }
+                else {
+                  $line=118;
+                  if ($opEqualY(input,'*')) {
+                    $line=118;
+                    $result=GCollections.asList(p,q,r,'0');
+                    if (true) break $try;
+                  }
+                  else {
+                    $line=119;
+                    if ($opEqualY(input,p)) {
+                      $line=119;
+                      $result=GCollections.asList(p,q,r,'1');
+                      if (true) break $try;
+                    }
+                    else {
+                      $line=120;
+                      $result=GCollections.asList(input,'0','0','0');
+                      if (true) break $try;
+                    }
+                  }
+                }
+              }
+              else {
+                $line=122;
+                if ((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'1'))) {
+                  $line=123;
+                  if (($opEqualY(input,'&')||$opEqualY(input,'*'))) {
+                    $line=123;
+                    $result='e';
+                    if (true) break $try;
+                  }
+                  else {
+                    $line=124;
+                    if ($opEqualY(input,q)) {
+                      $line=124;
+                      $result=GCollections.asList(p,q,r,'2');
+                      if (true) break $try;
+                    }
+                    else {
+                      $line=125;
+                      $result=GCollections.asList(p,input,'0','0');
+                      if (true) break $try;
+                    }
+                  }
+                }
+                else {
+                  $line=127;
+                  if ((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'2'))) {
+                    $line=128;
+                    if ((($opEqualY(input,'&')||$opEqualY(input,'*'))||$opEqualY(input,r))) {
+                      $line=128;
+                      $result='e';
+                      if (true) break $try;
+                    }
+                    else {
+                      $line=129;
+                      $result=GCollections.asList(p,q,input,'0');
+                      if (true) break $try;
+                    }
+                  }
+                  else {
+                    $line=131;
+                    $result='e';
+                    if (true) break $try;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      $line=133;
+      $rethrow(new RuntimeException("The function \"\u03B41(\u27E8p,q,r,s\u27E9:java.lang.Iterable,input:Object)\" did not return a value."));
+    }
+    catch (Throwable $throwable) {
+      $rethrow($throwable,CoderDecoder.class,"\u03B41",$line);
+    }
+    return $result;
+  }
+  public static Object h1(Object p, Object input) {
+    int $line=0;
+    Object $result=null;
+    $try:try {
+      $line=136;
+      $result="";
+      if (true) break $try;
+      $line=137;
+      $rethrow(new RuntimeException("The function \"h1(p:Object,input:Object)\" did not return a value."));
+    }
+    catch (Throwable $throwable) {
+      $rethrow($throwable,CoderDecoder.class,"h1",$line);
+    }
+    return $result;
+  }
+  public static Object h1(java.lang.Iterable $v11, Object input) {
+    int $line=0;
+    Object $result=null;
+    $try:try {
+      java.util.Iterator $v12=GCollections.unmodifiableCollection($v11).iterator();
+      Object p=$v12.next();
+      Object q=$v12.next();
+      Object r=$v12.next();
+      Object s=$v12.next();
+      $line=140;
+      if (((((($opEqualY(p,'0')&&$opEqualY(q,'0'))&&$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&!$opEqualY(input,'*'))&&!$opEqualY(input,'&'))) {
+        $line=140;
+        $result="";
+        if (true) break $try;
+      }
+      else {
+        $line=141;
+        if ((((((!$opEqualY(p,'0')&&$opEqualY(q,'0'))&&$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&!$opEqualY(input,'*'))&&!$opEqualY(input,'&'))) {
+          $line=141;
+          $result="";
+          if (true) break $try;
+        }
+        else {
+          $line=142;
+          if ((((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&!$opEqualY(input,'*'))&&!$opEqualY(input,'&'))) {
+            $line=142;
+            $result=$opAdditY($opAdditY($opAdditY("",input),q),p);
+            if (true) break $try;
+          }
+          else {
+            $line=143;
+            if (((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'0'))&&$opEqualY(input,'&'))) {
+              $line=143;
+              $result='&';
+              if (true) break $try;
+            }
+            else {
+              $line=144;
+              if ((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'&'))) {
+                $line=145;
+                if ($opEqualY(input,'&')) {
+                  $line=145;
+                  $result="";
+                  if (true) break $try;
+                }
+                else {
+                  $line=146;
+                  if ($opEqualY(input,'*')) {
+                    $line=146;
+                    $result=$opAdditY($opAdditY($opAdditY("",r),q),p);
+                    if (true) break $try;
+                  }
+                  else {
+                    $line=147;
+                    if ($opEqualY(input,p)) {
+                      $line=147;
+                      $result="";
+                      if (true) break $try;
+                    }
+                    else {
+                      $line=148;
+                      $result="";
+                      if (true) break $try;
+                    }
+                  }
+                }
+              }
+              else {
+                $line=150;
+                if ((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'1'))) {
+                  $line=151;
+                  if (($opEqualY(input,'&')||$opEqualY(input,'*'))) {
+                    $line=151;
+                    $result="";
+                    if (true) break $try;
+                  }
+                  else {
+                    $line=152;
+                    if ($opEqualY(input,q)) {
+                      $line=152;
+                      $result="";
+                      if (true) break $try;
+                    }
+                    else {
+                      $line=153;
+                      $result="";
+                      if (true) break $try;
+                    }
+                  }
+                }
+                else {
+                  $line=155;
+                  if ((((!$opEqualY(p,'0')&&!$opEqualY(q,'0'))&&!$opEqualY(r,'0'))&&$opEqualY(s,'2'))) {
+                    $line=156;
+                    if ((($opEqualY(input,'&')||$opEqualY(input,'*'))||$opEqualY(input,r))) {
+                      $line=156;
+                      $result="";
+                      if (true) break $try;
+                    }
+                    else {
+                      $line=157;
+                      $result=$opAdditY($opAdditY($opAdditY("",input),q),p);
+                      if (true) break $try;
+                    }
+                  }
+                  else {
+                    $line=159;
+                    $result="";
+                    if (true) break $try;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      $line=161;
+      $rethrow(new RuntimeException("The function \"h1(\u27E8p,q,r,s\u27E9:java.lang.Iterable,input:Object)\" did not return a value."));
     }
     catch (Throwable $throwable) {
       $rethrow($throwable,CoderDecoder.class,"h1",$line);
